@@ -1,0 +1,12 @@
+/.eggs/
+/.mypy_cache/
+/.pytest_cache/
+/.tox/
+/build/
+/dist/
+/*.egg-info/
+/venv
+/homf-junit.xml
+/homf-junit.xml.html
+/docs/build/
+__pycache__

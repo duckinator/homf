@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "homf"
+dynamic = ["version"]
+authors = [
+    {name = "Ellen Marie Dash", email = "me@duckie.co"},
+]
+description = "Download artifacts from various sources. E.g., a ZipApp from GitHub Releases."
+readme = "README.md"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+]
+
+requires-python = ">= 3.8"
+
+[project.urls]
+repository = "https://github.com/duckinator/homf"
+documentation = "https://homf.readthedocs.io/en/latest/"
+
+[project.optional-dependencies]
+lint = [
+    "pylint==3.0.1",
+]
+
+test = [
+    "pytest==7.4.2",
+]
+
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-argparse",
+]
+
+[project.scripts]
+homf = "homf.cli:main"
+
+[tool.hatch.version]
+path = "homf/version.py"
+
+[tool.bork.zipapp]
+enabled = true
+main = "homf.cli:main"
+
+[tool.bork.release]
+pypi = true
+github = true
+github_repository = "duckinator/homf"
+strip_zipapp_version = true
+
+[tool.bork.aliases]
+lint = "pylint homf tests"
+# Runs all tests.
+test = "pytest --junitxml=homf-junit.xml --verbose"
+# Runs fast tests.
+test-fast = "pytest --verbose -m 'not slow'"
+# Runs slow tests.
+test-slow = "pytest --verbose -m slow"
+# Build docs locally.
+docs = "sphinx-build -b html -d build/doctrees docs/source/ docs/build/"
+docs-clean = "rm -rf docs/build/"
+
