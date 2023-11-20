@@ -4,7 +4,7 @@ Lint_task:
   install_script:
     - pip install -U pip
     - pip install .
-    - pip install .[lint] .[test]
+    - pip install .[lint] .[test] bork
   script:
     - pylint --version
     - bork run lint
@@ -18,10 +18,8 @@ Linux_task:
       - image: python:3.10-slim
       - image: python:3.11-slim
   install_script:
-    - apt-get update
-    - apt-get install -y git
     - pip install -U pip
-    - pip install . .[test]
+    - pip install . .[test] bork
   script:
     - python3 --version
     - bork run test
@@ -52,7 +50,7 @@ macOS_task:
     - pyenv rehash
   pip_install_script:
     - pip install -U pip
-    - pip install .[test]
+    - pip install .[test] bork
   script:
     - python3 --version
     - bork run test
@@ -78,7 +76,7 @@ FreeBSD_task:
     - python${PYTHON} -m ensurepip
   pip_install_script:
     - python${PYTHON} -m pip install -U pip
-    - python${PYTHON} -m pip install .[test]
+    - python${PYTHON} -m pip install .[test] bork
   script:
     - python${PYTHON} --version
     - bork run test
@@ -103,7 +101,7 @@ Windows_task:
     - C:\python-installer.exe /quiet TargetDir=C:\Python SimpleInstall=1
   install_script:
     - C:\Python\python.exe -m pip install -U pip
-    - C:\Python\python.exe -m pip install .[test]
+    - C:\Python\python.exe -m pip install .[test] bork
   version_info_script:
     - C:\Python\python.exe --version
   test_script:
