@@ -2,7 +2,7 @@ Lint_task:
   container:
     image: python:3.11-slim
   install_script:
-    - pip install -U --upgrade-strategy eager pip 'setuptools>61'
+    - pip install -U pip
     - pip install .
     - pip install .[lint] .[test]
   script:
@@ -20,7 +20,7 @@ Linux_task:
   install_script:
     - apt-get update
     - apt-get install -y git
-    - pip install -U --upgrade-strategy eager pip 'setuptools>61'
+    - pip install -U pip
     - pip install . .[test]
   script:
     - python3 --version
@@ -51,7 +51,7 @@ macOS_task:
     - pyenv global ${PYTHON}
     - pyenv rehash
   pip_install_script:
-    - pip install -U --upgrade-strategy eager pip 'setuptools>61'
+    - pip install -U pip
     - pip install .[test]
   script:
     - python3 --version
@@ -77,7 +77,7 @@ FreeBSD_task:
     - pkg install -y python${PY} git
     - python${PYTHON} -m ensurepip
   pip_install_script:
-    - python${PYTHON} -m pip install -U --upgrade-strategy eager pip 'setuptools>61'
+    - python${PYTHON} -m pip install -U pip
     - python${PYTHON} -m pip install .[test]
   script:
     - python${PYTHON} --version
@@ -102,7 +102,7 @@ Windows_task:
     - ps: Invoke-WebRequest -Uri https://www.python.org/ftp/python/${env:PYTHON}/python-${env:PYTHON}-amd64.exe -OutFile C:\python-installer.exe
     - C:\python-installer.exe /quiet TargetDir=C:\Python SimpleInstall=1
   install_script:
-    - C:\Python\python.exe -m pip install -U --upgrade-strategy eager pip "setuptools>61"
+    - C:\Python\python.exe -m pip install -U pip
     - C:\Python\python.exe -m pip install .[test]
   version_info_script:
     - C:\Python\python.exe --version
@@ -131,13 +131,13 @@ Release_task:
   env:
     TWINE_USERNAME: "__token__"
     TWINE_PASSWORD: ENCRYPTED[...]
-    BORK_GITHUB_TOKEN: ENCRYPTED[...]
+    BORK_GITHUB_TOKEN: ENCRYPTED[e67bc3aec2f14be284e1646e19eb6054ec29046c56f678b636d84771695f6d77cf4766a3dea6c2c3499dbec9eb5e0b02]
   container:
     image: python:3.11-slim
   install_script:
     - apt-get update
     - apt-get install -y git
-    - pip install -U --upgrade-strategy eager pip 'setuptools>61'
+    - pip install -U pip
     - pip3 install . .[test]
   build_script:
     - bork clean

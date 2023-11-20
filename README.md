@@ -12,3 +12,10 @@ homf requires Python 3.8 or newer.
 
 [docs-img]: https://readthedocs.org/projects/homf/badge/?version=latest
 [docs-link]: https://homf.readthedocs.io/en/latest/?badge=latest
+
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at <https://github.com/duckinator/homf>.
+
+The code for Bork is available under the [MIT License](http://opensource.org/licenses/MIT).
