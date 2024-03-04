@@ -136,7 +136,7 @@ Release_task:
     - apt-get update
     - apt-get install -y git
     - pip install -U pip
-    - pip3 install . .[test]
+    - pip3 install . .[test] bork
   build_script:
     - bork clean
     - bork build
