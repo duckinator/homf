@@ -89,7 +89,7 @@ def _arg_parser():
 
     githubp = subparsers.add_parser("github",
                                       help="Download an artifact from GitHub.")
-    githubp.add_argument("--files", action="store", default="*.pyz",
+    githubp.add_argument("--files", action="store", default="*",
                           help="Comma-separated list of filenames to download."
                                "Supports wildcards (* = everything, ? = any single character).")
     githubp.add_argument("--directory", action="store", default="downloads",
@@ -104,7 +104,7 @@ def _arg_parser():
 
     pypip = subparsers.add_parser("pypi",
                                       help="Download an artifact from PyPi.")
-    pypip.add_argument("--files", action="store", default="*.pyz",
+    pypip.add_argument("--files", action="store", default="*",
                           help="Comma-separated list of filenames to download."
                                "Supports wildcards (* = everything, ? = any single character).")
     pypip.add_argument("--directory", action="store", default="downloads",
@@ -136,6 +136,11 @@ def main(cmd_args=None):
     if args.version:
         print(f"homf v{__version__}")
         sys.exit()
+
+    log_level = logging.INFO
+    if args.verbose:
+        log_level = logging.DEBUG
+    logging.basicConfig(format="%(levelname)-8s %(message)s", level=log_level)
 
     try:
         args.func(args)

@@ -43,6 +43,7 @@ def _get_release_info(repo, name, draft=False, prerelease=False):
             logging.info("Selected release '%s' as latest", release['name'])
         else:
             release = list(filter(lambda x: x['tag_name'] == name, releases))[0]
+            logging.info("Selected release '%s' as %s", release['name'], release['tag_name'])
 
     except (IndexError, ValueError) as e:
         raise RuntimeError(f"No such Github release: '{name}'") from e
