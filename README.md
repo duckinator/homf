@@ -4,9 +4,8 @@ Homf is a tool for downloading artifacts from online services, like a ZipApp fro
 
 Documentation: <https://homf.readthedocs.io/>
 
-If you have [pipx](https://pipx.pypa.io/) installed, it is recommended to
-use `pipx run homf ...` instead. You can use a shell alias, such as
-`alias homf='pipx run homf'`, to avoid having to remember this.
+The recommended way to install Homf is via [pipx](https://pipx.pypa.io/).
+If you have pipx installed, you can install Homf via `pipx install homf`.
 
 The basic syntax is `homf SOURCE [OPTIONS] PACKAGE RELEASE`. `SOURCE` is one of `github` or `pypi`.
 For GitHub, `PACKAGE` is the repository and `RELEASE` is the tag used by GitHub Releases.
