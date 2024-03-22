@@ -71,6 +71,6 @@ test-fast = "pytest --verbose -m 'not slow'"
 # Runs slow tests.
 test-slow = "pytest --verbose -m slow"
 # Build docs locally.
-docs = "sphinx-build -b html -d build/doctrees docs/source/ docs/build/"
+docs = "sphinx-build -b html -d docs/build/doctrees docs/source/ docs/build/"
 docs-clean = "rm -rf docs/build/"
 

@@ -8,7 +8,7 @@ import packaging.version
 from . import asset_manager
 
 
-def relevant_asset(asset, file_pattern):
+def _relevant_asset(asset, file_pattern):
     file_patterns = file_pattern.split(',')
     for pattern in file_patterns:
         if fnmatch.fnmatch(asset['name'], pattern):
@@ -16,7 +16,7 @@ def relevant_asset(asset, file_pattern):
     return False
 
 
-def get_release_info(repo, name, draft=False, prerelease=False):
+def _get_release_info(repo, name, draft=False, prerelease=False):
     if '/' not in repo:
         raise ValueError(
             f"repo must be of format <user>/<repo>, got '{repo}'",
@@ -51,7 +51,13 @@ def get_release_info(repo, name, draft=False, prerelease=False):
 
 
 def download(repo, release, file_pattern, directory):
-    release_info = get_release_info(repo, release, file_pattern)
-    assets = filter(lambda x: relevant_asset(x, file_pattern),
+    """
+    Finds GitHub Release ``release`` for ``repo``, and downloads all files
+    matching ``file_pattern`` to ``directory``.
+
+    Creates ``directory`` if needed.
+    """
+    release_info = _get_release_info(repo, release, file_pattern)
+    assets = filter(lambda x: _relevant_asset(x, file_pattern),
                     release_info['assets'])
     asset_manager.download(assets, directory, url_key='browser_download_url')

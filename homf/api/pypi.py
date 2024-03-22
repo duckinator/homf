@@ -6,7 +6,7 @@ from urllib.request import urlopen
 from . import asset_manager
 
 
-class SimplePypiParser(HTMLParser):
+class _SimplePypiParser(HTMLParser):
     files: Dict[str, str] = {}
     in_anchor = False
     current_url = None
@@ -66,7 +66,7 @@ def _matches_version(filename, version):
     return fnmatch.fnmatch(file_version, version)
 
 
-def get_download_info(base_url, package, release, file_pattern):
+def _get_download_info(base_url, package, release, file_pattern):
     results = []
 
     # Normalize base_url so it never ends with a forward slash.
@@ -75,7 +75,7 @@ def get_download_info(base_url, package, release, file_pattern):
 
     with urlopen(f"{base_url}/{package}/") as f:
         html = f.read().decode()
-    parser = SimplePypiParser()
+    parser = _SimplePypiParser()
     parser.feed(html)
     files = parser.files
 
@@ -94,6 +94,12 @@ def get_download_info(base_url, package, release, file_pattern):
 
 
 def download(package, release, file_pattern, directory):
+    """
+    Finds version ``release`` of ``package`` on PyPi, downloads all files
+    matching ``file_pattern``, and saves them all to ``directory``.
+
+    Creates ``directory`` if it does not already exist.
+    """
     repository_url = "https://pypi.org/simple/"
-    asset_list = get_download_info(repository_url, package, release, file_pattern)
+    asset_list = _get_download_info(repository_url, package, release, file_pattern)
     asset_manager.download(asset_list, directory)
