@@ -137,6 +137,11 @@ def main(cmd_args=None):
         print(f"homf v{__version__}")
         sys.exit()
 
+    log_level = logging.INFO
+    if args.verbose:
+        log_level = logging.DEBUG
+    logging.basicConfig(format="%(levelname)-8s %(message)s", level=log_level)
+
     try:
         args.func(args)
     except RuntimeError as err:
