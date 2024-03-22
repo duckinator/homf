@@ -1,6 +1,7 @@
 import fnmatch
 import re
 from html.parser import HTMLParser
+import logging
 from typing import Dict
 from urllib.request import urlopen
 from . import asset_manager
@@ -78,6 +79,12 @@ def _get_download_info(base_url, package, release, file_pattern):
     parser = _SimplePypiParser()
     parser.feed(html)
     files = parser.files
+
+    versions = sorted(set(map(lambda x: x.split("-")[1].replace(".tar.gz", ""), files.keys())))
+
+    if release == "latest":
+        release = versions[-1]
+        logging.info("Selected release '%s' as latest", release)
 
     keys = list(files.keys()).copy()
     for name in keys:
