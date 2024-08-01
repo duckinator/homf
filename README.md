@@ -58,4 +58,4 @@ Homf requires Python 3.8 or newer.
 
 Bug reports and pull requests are welcome on GitHub at <https://github.com/duckinator/homf>.
 
-The code for Bork is available under the [MIT License](http://opensource.org/licenses/MIT).
+The code for Homf is available under the [MIT License](http://opensource.org/licenses/MIT).
