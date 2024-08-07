@@ -100,13 +100,15 @@ def _get_download_info(base_url, package, release, file_pattern):
     return results
 
 
-def download(package, release, file_pattern, directory):
+def download(
+        package, release, file_pattern, directory,
+        *, repository_url = "https://pypi.org/simple/",
+):
     """
-    Finds version ``release`` of ``package`` on PyPi, downloads all files
-    matching ``file_pattern``, and saves them all to ``directory``.
+    Finds version ``release`` of ``package`` in a PyPI repository, downloads
+    all files matching ``file_pattern``, and saves them all to ``directory``.
 
     Creates ``directory`` if it does not already exist.
     """
-    repository_url = "https://pypi.org/simple/"
     asset_list = _get_download_info(repository_url, package, release, file_pattern)
     asset_manager.download(asset_list, directory)
