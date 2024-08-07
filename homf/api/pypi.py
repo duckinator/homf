@@ -37,10 +37,6 @@ class _SimplePypiParser(HTMLParser):
         raise RuntimeError(f"{self.__class__.__name__}: {message}")
 
 
-def _normalize(name):
-    return re.sub(r'[-_.]+', '-', name).lower()
-
-
 def _matches_pattern(filename, file_pattern):
     file_patterns = file_pattern.split(',')
 
