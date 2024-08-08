@@ -127,8 +127,8 @@ Release_task:
   only_if: "changesInclude('homf/version.py') && $BRANCH == 'main' && $CIRRUS_CRON == ''"
   depends_on: [CI success]
   env:
-    TWINE_USERNAME: "__token__"
-    TWINE_PASSWORD: ENCRYPTED[99be9b7794bdd10b3d711c2482ab108fb361b8f89242eb813cec4edcd2b714f98b13b652a2123ff5064abd8c6cfed373]
+    BORK_PYPI_USERNAME: "__token__"
+    BORK_PYPI_PASSWORD: ENCRYPTED[99be9b7794bdd10b3d711c2482ab108fb361b8f89242eb813cec4edcd2b714f98b13b652a2123ff5064abd8c6cfed373]
     BORK_GITHUB_TOKEN: ENCRYPTED[e67bc3aec2f14be284e1646e19eb6054ec29046c56f678b636d84771695f6d77cf4766a3dea6c2c3499dbec9eb5e0b02]
   container:
     image: python:3.11-slim
