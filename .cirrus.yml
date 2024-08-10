@@ -1,5 +1,10 @@
+# Nothing is OS-specific, so we're only testing on Linux right now.
+# If any OS-specific bugs show up, we can change that. -@duckinator
+
 Lint_task:
   container:
+    cpu: 1
+    memory: 512Mi
     image: python:3.11-slim
   install_script:
     - pip install -U pip
@@ -12,6 +17,8 @@ Lint_task:
 Linux_task:
   alias: Linux tests
   container:
+    cpu: 1
+    memory: 512Mi
     matrix:
       - image: python:3.8-slim
       - image: python:3.9-slim
@@ -24,103 +31,12 @@ Linux_task:
     - python3 --version
     - bork run test
 
-macOS_task:
-  alias: macOS tests
-  macos_instance:
-    image: ghcr.io/cirruslabs/macos-ventura-base:latest
-  env:
-    LC_ALL: en_US.UTF-8
-    LANG: en_US.UTF-8
-    PATH: ${HOME}/.pyenv/shims:${PATH}
-    matrix:
-      # https://formulae.brew.sh/formula/python@3.10
-      - PYTHON: 3.8.16
-      - PYTHON: 3.9.16
-      - PYTHON: 3.10.9
-      - PYTHON: 3.11.1
-  brew_update_script:
-    - brew update
-  brew_install_script:
-    # Per the pyenv homebrew recommendations.
-    #  https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-    - brew install openssl readline sqlite3 xz zlib pyenv git
-  pyenv_install_script:
-    - pyenv install ${PYTHON}
-    - pyenv global ${PYTHON}
-    - pyenv rehash
-  pip_install_script:
-    - pip install -U pip
-    - pip install .[test] bork
-  script:
-    - python3 --version
-    - bork run test
-  always:
-    upload_results_artifacts:
-      path: ./homf-junit.xml
-      format: junit
-      type: text/xml
-
-FreeBSD_task:
-  alias: FreeBSD tests
-  freebsd_instance:
-    image_family: freebsd-14-0
-  env:
-    matrix:
-      - PYTHON: 3.8
-      - PYTHON: 3.9
-      - PYTHON: 3.10
-      - PYTHON: 3.11
-  install_script:
-    - PY=`echo $PYTHON | tr -d '.'`
-    - pkg install -y python${PY} git
-    - python${PYTHON} -m ensurepip
-  pip_install_script:
-    - python${PYTHON} -m pip install -U pip
-    - python${PYTHON} -m pip install .[test] bork
-  script:
-    - python${PYTHON} --version
-    - bork run test
-  always:
-    upload_results_artifacts:
-      path: ./homf-junit.xml
-      format: junit
-      type: text/xml
-
-Windows_task:
-  windows_container:
-    image: cirrusci/windowsservercore:2019
-  env:
-    matrix:
-      - PYTHON: 3.8.10
-      - PYTHON: 3.9.13
-      - PYTHON: 3.10.9
-      - PYTHON: 3.11.1
-  python_install_script:
-    # https://docs.python.org/3.6/using/windows.html#installing-without-ui
-    - ps: Invoke-WebRequest -Uri https://www.python.org/ftp/python/${env:PYTHON}/python-${env:PYTHON}-amd64.exe -OutFile C:\python-installer.exe
-    - C:\python-installer.exe /quiet TargetDir=C:\Python SimpleInstall=1
-  install_script:
-    - C:\Python\python.exe -m pip install -U pip
-    - C:\Python\python.exe -m pip install .[test] bork
-  version_info_script:
-    - C:\Python\python.exe --version
-  test_script:
-    - C:\Python\python.exe -m pytest --verbose
-  always:
-    upload_results_artifacts:
-      path: ./homf-junit.xml
-      format: junit
-      type: text/xml
-
 success_task:
   name: CI success
   container: {image: "busybox"}
   depends_on:
     - Lint
-    - FreeBSD tests
     - Linux tests
-    - macOS tests
-    - Windows
 
 # If homf/version.py is modified on the main branch, make a release.
 Release_task:
